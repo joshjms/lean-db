@@ -1,0 +1,10 @@
+name = "lean-db"
+version = "0.1.0"
+defaultTargets = ["lean-db"]
+
+[[lean_lib]]
+name = "LeanDB"
+
+[[lean_exe]]
+name = "lean-db"
+root = "Main"
