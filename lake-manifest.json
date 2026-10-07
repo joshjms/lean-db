@@ -1,6 +1,16 @@
 {"version": "1.2.0",
  "packagesDir": ".lake/packages",
- "packages": [],
+ "packages":
+ [{"url": "https://github.com/jcreinhold/lean-fmt",
+   "type": "git",
+   "subDir": null,
+   "scope": "",
+   "rev": "9e8704afb1ed88a935cbdbf10d735e826b0034b8",
+   "name": "«lean-fmt»",
+   "manifestFile": "lake-manifest.json",
+   "inputRev": "v4.34.0-rc2",
+   "inherited": false,
+   "configFile": "lakefile.lean"}],
  "name": "«lean-db»",
  "lakeDir": ".lake",
  "fixedToolchain": false}

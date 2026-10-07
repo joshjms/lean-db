@@ -8,3 +8,8 @@ name = "LeanDB"
 [[lean_exe]]
 name = "lean-db"
 root = "Main"
+
+[[require]]
+name = "lean-fmt"
+git = "https://github.com/jcreinhold/lean-fmt"
+rev = "v4.34.0-rc2"
