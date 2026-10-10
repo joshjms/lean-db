@@ -1,6 +1,7 @@
 name = "lean-db"
 version = "0.1.0"
 defaultTargets = ["lean-db"]
+testDriver = "Tests"
 
 [[lean_lib]]
 name = "LeanDB"
@@ -8,6 +9,10 @@ name = "LeanDB"
 [[lean_exe]]
 name = "lean-db"
 root = "Main"
+
+[[lean_lib]]
+name = "Tests"
+globs = ["Tests.+"]
 
 [[require]]
 name = "lean-fmt"
