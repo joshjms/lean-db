@@ -2,6 +2,7 @@ name = "lean-db"
 version = "0.1.0"
 defaultTargets = ["lean-db"]
 testDriver = "Tests"
+license = "MIT"
 
 [[lean_lib]]
 name = "LeanDB"
