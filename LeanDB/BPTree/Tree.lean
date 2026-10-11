@@ -6,8 +6,7 @@ Authors: LeanDB Authors
 
 import LeanDB.Utils.Helpers
 
-structure Config where
-  name : String := "leandb"
+structure TreeConfig where
   order : Nat := 3
 
 structure Entry where
@@ -21,7 +20,7 @@ inductive Node where
   deriving Repr, Inhabited
 
 structure Tree where
-  config : Config
+  config : TreeConfig
   root : Node
 
 --- BPTree visualization
@@ -76,7 +75,7 @@ def splitInternal (keys : Array Nat) (children : Array Node) : PutResult :=
   let r := Node.internal keys[(mid + 1):] children[(mid + 1):]
   .split l keys[mid]! r
 
-def Node.put (u : Node) (k : Nat) (v : String) (cfg : Config) : PutResult :=
+def Node.put (u : Node) (k : Nat) (v : String) (cfg : TreeConfig) : PutResult :=
   match u with
   | .leaf entries =>
     let entries := insertOrUpdateEntry entries k v

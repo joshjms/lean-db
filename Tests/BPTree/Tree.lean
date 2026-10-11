@@ -10,7 +10,6 @@ import LeanDB.BPTree.Tree
 def sampleTree : Tree :=
   { config :=
       {
-        name := "test-db",
         order := 4,
       }
     root :=
