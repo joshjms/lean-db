@@ -1,6 +1,6 @@
 name = "lean-db"
 version = "0.1.0"
-defaultTargets = ["lean-db"]
+defaultTargets = ["LeanDB", "ldb"]
 testDriver = "Tests"
 license = "MIT"
 
@@ -8,7 +8,7 @@ license = "MIT"
 name = "LeanDB"
 
 [[lean_exe]]
-name = "lean-db"
+name = "ldb"
 root = "Main"
 
 [[lean_lib]]
@@ -19,3 +19,8 @@ globs = ["Tests.+"]
 name = "lean-fmt"
 git = "https://github.com/jcreinhold/lean-fmt"
 rev = "v4.34.0-rc2"
+
+[[require]]
+name = "Cli"
+git = "https://github.com/leanprover/lean4-cli"
+rev = "v4.34.0"
