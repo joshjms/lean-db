@@ -43,10 +43,29 @@ def sampleTree : Tree :=
 
 #guard sampleTree.get? 50 == "whirlipede"
 
-def treeAfterPut := (sampleTree.put 53 "whimsicott").put 55 "lilligant"
+def treeAfterPut :=
+  (sampleTree.put 53 "whimsicott").put 55 "lilligant"
 
 #guard treeAfterPut.get? 53 == "whimsicott"
 
 #guard treeAfterPut.get? 55 == "lilligant"
 
 #guard treeAfterPut.get? 60 == none
+
+#guard treeAfterPut.range 5 10 == #[{ key := 5, val := "pignite" }, { key := 10, val := "patrat" }]
+
+#guard
+  treeAfterPut.range 0 50 ==
+    #[{ key := 5, val := "pignite" }, { key := 10, val := "patrat" },
+      { key := 20, val := "simisear" }, { key := 30, val := "roggenrola" },
+      { key := 40, val := "conkeldurr" }, { key := 50, val := "whirlipede" }]
+
+#guard
+  treeAfterPut.range 53 55 ==
+    #[{ key := 53, val := "whimsicott" }, { key := 55, val := "lilligant" }]
+
+#guard treeAfterPut.range 54 55 == #[{ key := 55, val := "lilligant" }]
+
+#guard treeAfterPut.range 55 55 == #[{ key := 55, val := "lilligant" }]
+
+#guard treeAfterPut.range 56 55 == #[]

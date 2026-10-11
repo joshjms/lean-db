@@ -13,7 +13,7 @@ structure Config where
 structure Entry where
   key : Nat
   val : String
-  deriving Repr, Inhabited
+  deriving BEq, Repr, Inhabited
 
 inductive Node where
   | leaf (entries : Array Entry)
@@ -40,7 +40,7 @@ def Node.height (u : Node) : Nat :=
   match u with
   | .leaf _ => 1
   | .internal _ children => 1 + (children.attach.map (fun ⟨e, _h⟩ => e.height)).foldl max 0
-  termination_by u
+termination_by u
 
 -- BPTree methods
 
@@ -57,7 +57,8 @@ where binarySearch (l r : Nat) : Nat :=
 -- `put`
 
 def insertOrUpdateEntry (entries : Array Entry) (k : Nat) (v : String) : Array Entry :=
-  entries.filter (fun e => e.key < k) ++ #[{ key := k, val := v }] ++ entries.filter (fun e => e.key > k)
+  entries.filter (fun e => e.key < k) ++ #[{ key := k, val := v }] ++
+    entries.filter (fun e => e.key > k)
 
 inductive PutResult where
   | split (l : Node) (m : Nat) (r : Node)
@@ -79,10 +80,7 @@ def Node.put (u : Node) (k : Nat) (v : String) (cfg : Config) : PutResult :=
   match u with
   | .leaf entries =>
     let entries := insertOrUpdateEntry entries k v
-    if entries.size < cfg.order then
-      .done (.leaf entries)
-    else
-      splitLeaf entries
+    if entries.size < cfg.order then .done (.leaf entries) else splitLeaf entries
   | .internal keys children =>
     let idx := childIndex keys k
     if h : idx < children.size then
@@ -96,8 +94,7 @@ def Node.put (u : Node) (k : Nat) (v : String) (cfg : Config) : PutResult :=
         let children := (children.set! idx l).insertIdx! (idx + 1) r
         if keys.size < cfg.order then .done (.internal keys children)
         else splitInternal keys children
-    else
-      .done u
+    else .done u
 
 def Tree.put (t : Tree) (k : Nat) (v : String) : Tree :=
   match t.root.put k v t.config with
@@ -122,6 +119,20 @@ def Node.get? (u : Node) (k : Nat) : Option String :=
 
 def Tree.get? (t : Tree) (k : Nat) : Option String :=
   t.root.get? k
+
+-- `range`
+
+def Node.range (u : Node) (lk : Nat) (rk : Nat) : Array Entry :=
+  match u with
+  | .leaf entries => entries.filter (fun e => (e.key >= lk) && (e.key <= rk))
+  | .internal keys children =>
+    let leftIdx := childIndex keys lk
+    let rightIdx := childIndex keys rk
+    (children.attach.extract leftIdx (rightIdx + 1)).flatMap (fun ⟨c, _h⟩ => c.range lk rk)
+termination_by u
+
+def Tree.range (t : Tree) (lk : Nat) (rk : Nat) : Array Entry :=
+  t.root.range lk rk
 
 -- `delete`
 
