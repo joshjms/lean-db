@@ -42,3 +42,11 @@ def sampleTree : Tree :=
 #guard sampleTree.get? 40 == "conkeldurr"
 
 #guard sampleTree.get? 50 == "whirlipede"
+
+def treeAfterPut := (sampleTree.put 53 "whimsicott").put 55 "lilligant"
+
+#guard treeAfterPut.get? 53 == "whimsicott"
+
+#guard treeAfterPut.get? 55 == "lilligant"
+
+#guard treeAfterPut.get? 60 == none
